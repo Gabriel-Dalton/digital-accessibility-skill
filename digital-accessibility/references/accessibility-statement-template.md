@@ -15,7 +15,7 @@ Use this template when a user asks for an accessibility statement. Customize all
 
 ## Conformance Status
 
-This [website/application] aims to conform to the [Web Content Accessibility Guidelines (WCAG) 2.2 Level AA / other applicable standard]. [Current conformance status — choose one]:
+This [website/application] aims to conform to the [Web Content Accessibility Guidelines (WCAG) 2.2 Level AA / other applicable standard]. [Current conformance status: choose one]:
 
 - **Fully conformant**: The content fully conforms to the accessibility standard without any exceptions.
 - **Partially conformant**: Some parts of the content do not fully conform to the accessibility standard.
@@ -29,7 +29,7 @@ We are aware of the following accessibility limitations:
 
 | Area | Description | Remediation Plan | Timeline |
 |------|-------------|------------------|----------|
-| [e.g., Video content] | [e.g., Some older videos lack captions] | [e.g., Captioning all videos] | [e.g., Q3 2025] |
+| [e.g., Video content] | [e.g., Some older videos lack captions] | [e.g., Captioning all videos] | [e.g., Quarter and year] |
 | [e.g., PDF documents] | [e.g., Some PDFs are not tagged for screen readers] | [e.g., Remediating priority documents] | [e.g., Ongoing] |
 
 ## Compatibility
@@ -59,7 +59,7 @@ These technologies are relied upon for conformance with the accessibility standa
 
 [Organization Name] assessed the accessibility of this [website/application] through:
 
-- [Self-evaluation / external audit / user testing with people with disabilities / automated testing — list applicable methods]
+- [Self-evaluation / external audit / user testing with people with disabilities / automated testing: list applicable methods]
 - [If audited: "An independent accessibility audit was conducted by [Auditor Name] on [Date]."]
 
 ## Feedback
@@ -110,10 +110,15 @@ Be honest. Courts and regulators view overclaiming conformance more negatively t
 List specific, concrete limitations. Vague statements like "some content may not be accessible" are unhelpful. Name the specific content types, pages, or features.
 
 ### Assessment Methods
-If the user hasn't done formal testing, recommend they at minimum: run axe-core or Lighthouse, do a keyboard walkthrough, and test with one screen reader. Note the methods actually used — don't claim user testing if it didn't happen.
+If the user hasn't done formal testing, recommend they at minimum: run axe-core or Lighthouse, do a keyboard walkthrough, and test with one screen reader. Note the methods actually used: don't claim user testing if it didn't happen.
 
 ### Feedback Mechanism
-This is legally required in many jurisdictions (ACA, EAA, AODA). The mechanism must be accessible itself. Provide multiple contact methods (not just a web form — someone who can't use the form needs an alternative).
+A feedback route is required by the EU Web Accessibility Directive, the UK PSBAR 2018, the Accessible Canada Act (feedback process) and the AODA IASR (s.11, accessible feedback processes). The mechanism must be accessible itself.
+
+### Statement format where a model is mandated
+- EU public sector: the model statement in Commission Implementing Decision (EU) 2018/1523.
+- UK public sector: the GOV.UK sample statement at https://www.gov.uk/guidance/model-accessibility-statement.
+- Canada, federally regulated: accessibility statements for web pages and apps under SOR/2025-255, from 5 December 2027 (federal public sector) and 5 December 2028 (private sector). Provide multiple contact methods (not just a web form: someone who can't use the form needs an alternative).
 
 ### Review Schedule
 Recommend reviewing and updating the statement at least annually, and after any major site redesign or new feature launch.

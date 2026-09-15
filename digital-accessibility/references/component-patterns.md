@@ -1,6 +1,6 @@
 # Accessible Component Patterns
 
-Keyboard interaction patterns and ARIA requirements for common UI components. Based on the WAI-ARIA Authoring Practices Guide (APG).
+Keyboard interaction patterns and ARIA requirements for common UI components. Each pattern follows the WAI-ARIA Authoring Practices Guide (APG) page of the same name: https://www.w3.org/WAI/ARIA/apg/patterns/ (checked 2026-09-15). Where a native HTML element exists, it comes first and the ARIA version is the fallback.
 
 ## Table of Contents
 - [Modal Dialog](#modal-dialog)
@@ -20,12 +20,30 @@ Keyboard interaction patterns and ARIA requirements for common UI components. Ba
 
 ## Modal Dialog
 
-### ARIA
+### Native first
+```html
+<dialog id="confirm" aria-labelledby="dialog-title">
+  <h2 id="dialog-title">Dialog Title</h2>
+  <div>...content...</div>
+  <button type="button" id="close">Close</button>
+</dialog>
+<script>
+  const dialog = document.getElementById('confirm');
+  // showModal() traps focus, makes the rest of the page inert and closes on Escape.
+  trigger.addEventListener('click', () => dialog.showModal());
+  document.getElementById('close').addEventListener('click', () => dialog.close());
+  dialog.addEventListener('close', () => trigger.focus());
+</script>
+```
+
+`<dialog>` with `showModal()` is supported in all current browsers (Baseline since March 2022). Prefer it over a custom dialog.
+
+### ARIA fallback
 ```html
 <div role="dialog" aria-modal="true" aria-labelledby="dialog-title">
   <h2 id="dialog-title">Dialog Title</h2>
   <div>...content...</div>
-  <button>Close</button>
+  <button type="button">Close</button>
 </div>
 ```
 
@@ -40,7 +58,7 @@ Keyboard interaction patterns and ARIA requirements for common UI components. Ba
 - On open: move focus to the first focusable element, or the close button, or the dialog itself if no focusable content.
 - On close: return focus to the element that triggered the dialog.
 - Trap focus inside the dialog while open. Nothing outside the dialog is reachable via Tab.
-- Add `aria-hidden="true"` to all content behind the dialog (or use `inert` attribute on background content).
+- For the ARIA fallback, set the `inert` attribute on everything outside the dialog while it is open (or `aria-hidden="true"` for older browsers). Native `showModal()` does this for you.
 
 ---
 
@@ -141,9 +159,9 @@ Keyboard interaction patterns and ARIA requirements for common UI components. Ba
 ### ARIA
 ```html
 <label for="search">Search</label>
-<div role="combobox" aria-expanded="false" aria-haspopup="listbox" aria-owns="results-list">
-  <input type="text" id="search" aria-autocomplete="list" aria-controls="results-list" aria-activedescendant="">
-</div>
+<input type="text" id="search" role="combobox"
+       aria-expanded="false" aria-autocomplete="list"
+       aria-controls="results-list" aria-activedescendant="">
 <ul role="listbox" id="results-list" hidden>
   <li role="option" id="option-1" aria-selected="false">Result 1</li>
   <li role="option" id="option-2" aria-selected="false">Result 2</li>
@@ -160,6 +178,7 @@ Keyboard interaction patterns and ARIA requirements for common UI components. Ba
 | Home / End | Move cursor to beginning/end of input text. |
 
 ### Notes
+- This is the ARIA 1.2 pattern: `role="combobox"` goes on the `<input>` itself. The older ARIA 1.0 pattern (role on a wrapper `<div>` with `aria-owns`) is deprecated in the APG.
 - Use `aria-activedescendant` on the input to indicate the visually focused option (keeps real DOM focus on the input so the user can keep typing).
 - Update `aria-expanded` when the list opens/closes.
 - Announce the number of results with a live region: "5 results available."
@@ -186,7 +205,7 @@ Keyboard interaction patterns and ARIA requirements for common UI components. Ba
 - Use `role="alert"` (assertive) for errors, warnings, time-sensitive info.
 - The live region container must exist in the DOM before content is injected.
 - Don't move focus to toasts unless they require user action.
-- Auto-dismissing toasts should stay visible for at least 5 seconds and be pausable on hover/focus.
+- A toast that disappears on a timer is a time limit under 2.2.1 Timing Adjustable unless the same information stays available elsewhere. Either keep a way to re-read it, or let users extend or pause it.
 - Provide a mechanism to review past notifications for users who might have missed them.
 
 ---
@@ -311,7 +330,7 @@ Keyboard interaction patterns and ARIA requirements for common UI components. Ba
 - Must meet WCAG 1.4.13: dismissible, hoverable, persistent.
 - Tooltip content must be hoverable without it disappearing.
 - Use `aria-describedby` for supplementary info, `aria-labelledby` if the tooltip IS the label.
-- If information is essential, don't put it in a tooltip — put it in visible text.
+- If information is essential, don't put it in a tooltip: put it in visible text.
 
 ---
 

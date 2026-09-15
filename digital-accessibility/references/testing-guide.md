@@ -25,7 +25,12 @@ Accessibility testing works in layers. No single layer catches everything:
 | Manual visual review | Color-only communication, tiny touch targets, text spacing issues, content reflow | Programmatic issues invisible to sighted users |
 | User testing with people with disabilities | Real-world usability problems that no checklist catches | (Most comprehensive but most resource-intensive) |
 
-**Automated tools catch roughly 30-40% of WCAG issues.** The rest require manual testing. Always tell users this.
+**What automated tools catch, with sources (checked 2026-09-15):**
+
+- GOV.UK (2017) ran 13 automated checkers against one page with 142 documented barriers. The best tool found 40%, and WAVE found 30%. https://accessibility.blog.gov.uk/2017/02/24/what-we-found-when-we-tested-tools-on-the-worlds-least-accessible-webpage/
+- Deque (2021) analysed about 13,000 pages and 300,000 issues from real audits and found axe-core rules fully covered 57% of issues by count. https://www.deque.com/blog/automated-testing-study-identifies-57-percent-of-digital-accessibility-issues/
+
+The two numbers measure different things. By criteria covered, automation reaches roughly 30 to 40%. By issue volume it can reach 57% because the failures it catches (missing alt, low contrast) are the most common. Under either measure, a large share of barriers needs manual testing. Always tell users this.
 
 ---
 
@@ -45,7 +50,7 @@ Accessibility testing works in layers. No single layer catches everything:
 
 ### Pa11y
 - CLI: `npx pa11y https://example.com`
-- CI-friendly, supports WCAG 2.1 AA rules
+- CI-friendly; runs the HTML_CodeSniffer or axe-core rule sets
 - Dashboard: `pa11y-dashboard` for monitoring over time
 
 ### WAVE
@@ -64,7 +69,7 @@ Accessibility testing works in layers. No single layer catches everything:
 
 ### Basic Keyboard Test Procedure
 
-1. Put your mouse aside. Seriously — don't touch it.
+1. Put your mouse aside. Seriously: don't touch it.
 2. Start at the browser address bar and press **Tab**.
 3. Tab through the entire page. Check:
    - Can you see where focus is at all times? (visible focus indicator)
@@ -80,7 +85,7 @@ Accessibility testing works in layers. No single layer catches everything:
    - Modals: Tab is trapped inside, Escape closes, focus returns to trigger
    - Tabs: Arrow keys move between tabs
    - Menus: Arrow keys navigate, Enter selects, Escape closes
-5. Check for keyboard traps — can you always Tab away from every element?
+5. Check for keyboard traps: can you always Tab away from every element?
 
 ### Key Commands Reference
 
@@ -98,7 +103,7 @@ Accessibility testing works in layers. No single layer catches everything:
 
 ## Screen Reader Testing
 
-### VoiceOver (macOS — built-in)
+### VoiceOver (macOS: built-in)
 
 **Start/Stop**: Cmd+F5 (or hold the Touch ID button on supported Macs)
 
@@ -114,7 +119,7 @@ Accessibility testing works in layers. No single layer catches everything:
 | Navigate by form control | VO+Cmd+J |
 | Navigate by landmark | VO+Cmd+; (semicolon) |
 
-### NVDA (Windows — free, download from nvaccess.org)
+### NVDA (Windows: free, download from nvaccess.org)
 
 **Start**: Run NVDA from start menu. **Stop**: Insert+Q.
 
@@ -131,7 +136,7 @@ Accessibility testing works in layers. No single layer catches everything:
 | Navigate by landmark | D |
 | Toggle browse/focus mode | Insert+Space |
 
-### TalkBack (Android — built-in)
+### TalkBack (Android: built-in)
 
 | Action | Gesture |
 |--------|---------|
@@ -183,8 +188,8 @@ When testing with a screen reader, check:
 ## Mobile Testing
 
 ### Touch Targets
-- Minimum 24×24 CSS pixels (WCAG 2.2 AA).
-- Target 44×44 CSS pixels for comfortable use.
+- Minimum 24×24 CSS pixels, or enough spacing that a 24px circle on each target does not overlap another (2.5.8 Target Size (Minimum), AA).
+- 44×44 CSS pixels is the AAA criterion (2.5.5 Target Size (Enhanced)) and the figure used by Apple and Google platform guidelines.
 - Check spacing between adjacent targets.
 
 ### Orientation
@@ -204,10 +209,10 @@ Use these scenarios as a starting point for manual testing:
 1. **Complete a purchase / submit a form** using only the keyboard.
 2. **Navigate to a specific page** using only the screen reader's heading navigation.
 3. **Read and understand a data table** with a screen reader.
-4. **Recover from a form error** — is the error announced? Can you find and fix the field?
+4. **Recover from a form error**: is the error announced? Can you find and fix the field?
 5. **Use a date picker** with only the keyboard.
-6. **Watch a video** — are captions available and accurate?
-7. **Use the site at 200% zoom** — can you still complete all tasks?
-8. **Use the site on mobile** — are touch targets large enough? Does everything work in both orientations?
-9. **Open and close a modal dialog** — does focus move correctly? Is background content inert?
-10. **Use the search/autocomplete** — are suggestions announced? Can you select one with the keyboard?
+6. **Watch a video**: are captions available and accurate?
+7. **Use the site at 200% zoom**: can you still complete all tasks?
+8. **Use the site on mobile**: are touch targets large enough? Does everything work in both orientations?
+9. **Open and close a modal dialog**: does focus move correctly? Is background content inert?
+10. **Use the search/autocomplete**: are suggestions announced? Can you select one with the keyboard?
